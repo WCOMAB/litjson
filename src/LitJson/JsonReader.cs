@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -394,7 +395,7 @@ namespace LitJson
             end_of_json  = true;
 
             if (reader_is_owned)
-                reader.Close ();
+                reader.Dispose();
 
             reader = null;
         }
