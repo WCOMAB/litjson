@@ -170,7 +170,7 @@ namespace LitJson
 
             data.IsArray = type.IsArray;
 
-            if (type.GetInterface ("System.Collections.IList") != null)
+            if (type.GetTypeInfo().GetInterface ("System.Collections.IList") != null)
                 data.IsList = true;
 
             foreach (PropertyInfo p_info in type.GetProperties ()) {
@@ -202,7 +202,7 @@ namespace LitJson
 
             ObjectMetadata data = new ObjectMetadata ();
 
-            if (type.GetInterface ("System.Collections.IDictionary") != null)
+            if (type.GetTypeInfo().GetInterface ("System.Collections.IDictionary") != null)
                 data.IsDictionary = true;
 
             data.Properties = new Dictionary<string, PropertyMetadata> ();
@@ -314,7 +314,7 @@ namespace LitJson
             Type value_type = underlying_type ?? inst_type;
 
             if (reader.Token == JsonToken.Null) {
-                if (inst_type.IsClass || underlying_type != null) {
+                if (inst_type.GetTypeInfo().IsClass || underlying_type != null) {
                     return null;
                 }
 
@@ -357,7 +357,7 @@ namespace LitJson
                 }
 
                 // Maybe it's an enum
-                if (value_type.IsEnum)
+                if (value_type.GetTypeInfo().IsEnum)
                     return Enum.ToObject (value_type, reader.Value);
 
                 // Try using an implicit conversion operator
